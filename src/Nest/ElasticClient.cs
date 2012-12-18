@@ -90,7 +90,7 @@ namespace Nest
 		/// Returns a response of type R based on the connection status without parsing status.Result into R
 		/// </summary>
 		/// <returns></returns>
-		private R ToResponse<R>(ConnectionStatus status, bool allow404 = false) where R : BaseResponse
+		protected virtual R ToResponse<R>(ConnectionStatus status, bool allow404 = false) where R : BaseResponse
 		{
 			var isValid =
 				(allow404)
@@ -107,7 +107,7 @@ namespace Nest
 		/// Returns a response of type R based on the connection status by trying parsing status.Result into R
 		/// </summary>
 		/// <returns></returns>
-		private R ToParsedResponse<R>(ConnectionStatus status, bool allow404 = false) where R : BaseResponse
+		protected virtual R ToParsedResponse<R>(ConnectionStatus status, bool allow404 = false) where R : BaseResponse
 		{
 			var isValid =
 				(allow404)
@@ -154,12 +154,15 @@ namespace Nest
 				this._IsValid = false;
 				return new ConnectionStatus(e);
 			}
-
 		}
 
-
-
-
-
+        /// <summary>
+        /// Sets the default index on the ConnectionSettings for this client
+        /// </summary>
+        public ElasticClient SetDefaultIndex(string defaultIndex)
+        {
+            this.Settings.SetDefaultIndex(defaultIndex);
+            return this;
+        }
 	}
 }

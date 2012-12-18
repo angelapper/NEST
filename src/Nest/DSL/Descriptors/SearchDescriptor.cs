@@ -840,7 +840,6 @@ namespace Nest
 		/// <summary>
 		/// Describe the query to perform as a raw json string
 		/// </summary>
-		[Obsolete("Deprecated but will never be removed. Found a bug in the DSL? https://github.com/Mpdreamz/NEST/issues")]
 		public SearchDescriptor<T> QueryRawJson(string rawQuery)
 		{
 			rawQuery.ThrowIfNull("rawQuery");
@@ -880,7 +879,6 @@ namespace Nest
 		/// <summary>
 		/// Filter search using a raw json string
 		/// </summary>
-		[Obsolete("Deprecated but will never be removed. Found a bug in the DSL? https://github.com/Mpdreamz/NEST/issues")]
 		public SearchDescriptor<T> FilterRawJson(string rawFilter)
 		{
 			rawFilter.ThrowIfNull("rawFilter");

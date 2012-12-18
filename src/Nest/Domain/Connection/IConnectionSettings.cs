@@ -20,5 +20,7 @@ namespace Nest
 		int MaximumAsyncConnections { get; }
 		bool UsesPrettyResponses { get; }
 		Uri Uri { get; }
+
+	    ConnectionSettings SetDefaultIndex(string defaultIndex);
 	}
 }

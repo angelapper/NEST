@@ -9,7 +9,7 @@ namespace Nest
 {
 	public partial class ElasticClient
 	{
-		private static Regex StripIndex = new Regex(@"^index\.");
+		private static readonly Regex StripIndex = new Regex(@"^index\.");
 
 		/// <summary>
 		/// Gets the index settings for the default index
@@ -27,13 +27,12 @@ namespace Nest
 			string path = this.PathResolver.CreateIndexPath(index, "_settings");
 			var status = this.Connection.GetSync(path);
 
-			var response = new IndexSettingsResponse();
-			response.IsValid = false;
-			try
+			var response = new IndexSettingsResponse {IsValid = false};
+		    try
 			{
 				var o = JObject.Parse(status.Result);
 				var settingsObject = o.First.First.First.First;
-        var settings = new IndexSettings(); //this.Deserialize<IndexSettings>(settingsObject.ToString());
+			    var settings = new IndexSettings(); //this.Deserialize<IndexSettings>(settingsObject.ToString());
 
 				foreach (JProperty s in settingsObject.Children<JProperty>())
 				{
@@ -64,11 +63,7 @@ namespace Nest
 
 			string path = this.PathResolver.CreateIndexPath(index, "_settings");
 			settings.Settings = settings.Settings
-					.Where(kv => IndexSettings.UpdateWhiteList.Any(p =>
-					{
-						return kv.Key.StartsWith(p);
-					}
-					)).ToDictionary(kv => kv.Key, kv => kv.Value);
+					.Where(kv => IndexSettings.UpdateWhiteList.Any(p => kv.Key.StartsWith(p))).ToDictionary(kv => kv.Key, kv => kv.Value);
 
 			var sb = new StringBuilder();
 			var sw = new StringWriter(sb);
@@ -102,17 +97,26 @@ namespace Nest
 			r.ConnectionStatus = status;
 			return r;
 		}
+        /// <summary>
+        /// Create an index with the specified index settings
+        /// </summary>
+        public IIndicesResponse CreateIndex(string index, IndexSettings settings)
+        {
+            string data = JsonConvert.SerializeObject(settings, Formatting.None, SerializationSettings);
+            return CreateIndex(index, data);
+        }
 		/// <summary>
 		/// Create an index with the specified index settings
 		/// </summary>
-		public IIndicesResponse CreateIndex(string index, IndexSettings settings)
+		public IIndicesResponse CreateIndex(string index, string settings)
 		{
 			string path = this.PathResolver.CreateIndexPath(index);
-			string data = JsonConvert.SerializeObject(settings, Formatting.None, SerializationSettings);
-			var status = this.Connection.PostSync(path, data);
-			var response = new IndicesResponse();
-			response.ConnectionStatus = status;
-			try
+			var status = this.Connection.PostSync(path, settings);
+		    var response = new IndicesResponse
+		        {
+		            ConnectionStatus = status
+		        };
+		    try
 			{
 				response = this.Deserialize<IndicesResponse>(status.Result);
 				response.IsValid = true;

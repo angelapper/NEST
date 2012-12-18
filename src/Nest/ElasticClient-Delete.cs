@@ -567,12 +567,11 @@ namespace Nest
       return this._deleteToPath(path, stringQuery);
     }
     /// <summary>
-    /// Deletes all documents that match the string query. OBSOLETE
+    /// Deletes all documents that match the string query.
     /// </summary>
     /// <param name="query">RoutingQueryPathDescriptor also allows you to control which indices and types are affected</param>
     /// <param name="parameters">Control routing/consistency and replication</param>
     /// <returns>IDeleteResponse, check .IsValid to validate success</returns>
-    [Obsolete("Deprecated but will never be removed. Found a bug in the DSL? https://github.com/Mpdreamz/NEST/issues")]
     public IDeleteResponse DeleteByQuery(string query, DeleteByQueryParameters parameters = null)
     {
       var descriptor = new RoutingQueryPathDescriptor();
@@ -615,12 +614,11 @@ namespace Nest
       return this._deleteToPathAsync(path, stringQuery);
     }
     /// <summary>
-    /// Deletes all documents that match the string query. OBSOLETE
+    /// Deletes all documents that match the string query.
     /// </summary>
     /// <param name="query">RoutingQueryPathDescriptor also allows you to control which indices and types are affected</param>
     /// <param name="parameters">Control routing/consistency and replication</param>
     /// <returns>IDeleteResponse, check .IsValid to validate success</returns>
-    [Obsolete("Deprecated but will never be removed. Found a bug in the DSL? https://github.com/Mpdreamz/NEST/issues")]
     public Task<IDeleteResponse> DeleteByQueryAsync(string query, DeleteByQueryParameters parameters = null)
     {
       var descriptor = new RoutingQueryPathDescriptor();
