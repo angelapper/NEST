@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 
@@ -13,7 +14,17 @@ namespace Nest
         /// <returns></returns>
         public IHealthResponse Health(HealthLevel level)
         {
-            return this._Health(new HealthParams {CheckLevel = level});
+            return Health(new HealthParams { CheckLevel = level });
+        }
+
+        /// <summary>
+        /// Gets the health status of the cluster, at the specified level, for the specified indexes.
+        /// </summary>
+        /// <param name="level"></param>
+        /// <returns></returns>
+        public IHealthResponse Health(IEnumerable<string> indices, HealthLevel level)
+        {
+            return Health(indices, new HealthParams {CheckLevel = level});
         } 
 
 		/// <summary>
@@ -23,12 +34,24 @@ namespace Nest
 		/// <returns></returns>
 		public IHealthResponse Health(HealthParams healthParams)
 		{
-			return this._Health(healthParams);
-		} 
+		    var path = this.PathResolver.CreateClusterPath("health");
+			return this._Health(path, healthParams);
+		}
 
-		private HealthResponse _Health(HealthParams healthParams)
+        /// <summary>
+        /// Gets the health status of the cluster according to the healthparams passed, for the specified indexes.
+        /// </summary>
+        /// <param name="healthParams"></param>
+        /// <returns></returns>
+        public IHealthResponse Health(IEnumerable<string> indices, HealthParams healthParams)
+        {
+            var path = this.PathResolver.CreateClusterPath(indices, "health");
+            return this._Health(path, healthParams);
+        } 
+
+		private HealthResponse _Health(string path, HealthParams healthParams)
 		{
-		    var path = this.PathResolver.CreateClusterPath("health") + "?level=";
+		    path += "?level=";
 		    path += (healthParams.CheckLevel ?? HealthLevel.Cluster).ToString().ToLower();
 
 		    if (!healthParams.Timeout.IsNullOrEmpty())

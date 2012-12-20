@@ -12,6 +12,12 @@ namespace Nest.Tests.Integration.Cluster
 		    var r = this.ConnectedClient.Health(HealthLevel.Cluster);
 		    Assert.True(r.IsValid);
 		}
+        [Test]
+        public void ClusterHealthPerIndex()
+        {
+            var r = this.ConnectedClient.Health(new[] {Test.Default.DefaultIndex}, HealthLevel.Cluster);
+            Assert.True(r.IsValid);
+        }
 		[Test]
 		public void IndexHealth()
         {
@@ -34,6 +40,19 @@ namespace Nest.Tests.Integration.Cluster
                     WaitForMinNodes = 1,
                     WaitForRelocatingShards = 0
                 });
+            Assert.True(r.IsValid);
+        }
+        [Test]
+        public void DetailedHealthPerIndex()
+        {
+            var r = this.ConnectedClient.Health(new[] {Test.Default.DefaultIndex},
+                                                new HealthParams
+                                                    {
+                                                        CheckLevel = HealthLevel.Shards,
+                                                        Timeout = "30s",
+                                                        WaitForMinNodes = 1,
+                                                        WaitForRelocatingShards = 0
+                                                    });
             Assert.True(r.IsValid);
         }
 	}
