@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseElasticSearchTests.cs" />
+    <Compile Include="Cluster\HealthTests.cs" />
     <Compile Include="ConnectionTests.cs" />
     <Compile Include="Core\ValidateTests.cs" />
     <Compile Include="Get\GetTests.cs" />

@@ -65,10 +65,15 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ElasticClient-Health.cs" />
     <Compile Include="Domain\FieldSelection.cs" />
+    <Compile Include="Domain\Parameters\HealthParams.cs" />
     <Compile Include="Domain\Responses\BulkResponse.cs" />
     <Compile Include="Domain\Responses\DeleteResponse.cs" />
+    <Compile Include="Domain\Responses\HealthResponse.cs" />
     <Compile Include="Domain\Responses\IndexResponse.cs" />
+    <Compile Include="Domain\Stats\IndexHealthStats.cs" />
+    <Compile Include="Domain\Stats\ShardHealthStats.cs" />
     <Compile Include="DSL\Descriptors\GetDescriptor.cs" />
     <Compile Include="DSL\Factory\Query\MatchQueryBuilder.cs" />
     <Compile Include="ElasticClient-MultiGet.cs" />
@@ -138,6 +143,8 @@
     <Compile Include="DSL\Factory\Common\Point.cs" />
     <Compile Include="DSL\Factory\Common\EsRegex.cs" />
     <Compile Include="Enums\ComparatorType.cs" />
+    <Compile Include="Enums\HealthStatus.cs" />
+    <Compile Include="Enums\HealthLevel.cs" />
     <Compile Include="Enums\SearchType.cs" />
     <Compile Include="Enums\Lang.cs" />
     <Compile Include="Enums\DateHistogramComparatorType.cs" />

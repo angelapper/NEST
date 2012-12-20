@@ -46,6 +46,12 @@ namespace Nest.Resolvers
 
 			return this.CreateIndexTypeIdPath(index, type, id);
 		}
+        
+        public string CreateClusterPath(string suffix = null)
+        {
+            suffix.ThrowIfNullOrEmpty("suffix");
+            return "_cluster/{0}/".F(suffix);
+        }
 
 		//19
 		public string CreateIndexPath(string index, string suffix = null)
