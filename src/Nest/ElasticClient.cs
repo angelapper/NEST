@@ -7,16 +7,16 @@ namespace Nest
 {
 	public partial class ElasticClient : Nest.IElasticClient
 	{
-		private IConnection Connection { get; set; }
-		private IConnectionSettings Settings { get; set; }
+		protected IConnection Connection { get; set; }
+		protected IConnectionSettings Settings { get; set; }
 		private bool _gotNodeInfo = false;
 		private bool _IsValid { get; set; }
 		private ElasticSearchVersionInfo _VersionInfo { get; set; }
 
-		private TypeNameResolver TypeNameResolver { get; set; }
-		private IdResolver IdResolver { get; set; }
-		private IndexNameResolver IndexNameResolver { get; set; }
-		private PathResolver PathResolver { get; set; }
+        protected TypeNameResolver TypeNameResolver { get; set; }
+        protected IdResolver IdResolver { get; set; }
+        protected IndexNameResolver IndexNameResolver { get; set; }
+        protected PathResolver PathResolver { get; set; }
 
 		/// <summary>
 		/// Validates the connection once and returns a bool whether NEST could connect to elasticsearch.
