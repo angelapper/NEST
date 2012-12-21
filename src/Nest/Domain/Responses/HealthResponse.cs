@@ -30,27 +30,27 @@ namespace Nest
         }
 
         [JsonProperty(PropertyName = "cluster_name")]
-        public string ClusterName { get; set; }
+        public string ClusterName { get; internal set; }
         [JsonProperty(PropertyName = "status")]
-        public string Status { get; set; }
+        public string Status { get; internal set; }
         [JsonProperty(PropertyName = "timed_out")]
-        public bool TimedOut { get; set; }
+        public bool TimedOut { get; internal set; }
 
         [JsonProperty(PropertyName = "number_of_nodes")]
-        public int NumberOfNodes { get; set; }
+        public int NumberOfNodes { get; internal set; }
         [JsonProperty(PropertyName = "number_of_data_nodes")]
-        public int NumberOfDataNodes { get; set; }
+        public int NumberOfDataNodes { get; internal set; }
 
         [JsonProperty(PropertyName = "active_primary_shards")]
-        public int ActivePrimaryShards { get; set; }
+        public int ActivePrimaryShards { get; internal set; }
         [JsonProperty(PropertyName = "active_shards")]
-        public int ActiveShards { get; set; }
+        public int ActiveShards { get; internal set; }
         [JsonProperty(PropertyName = "relocating_shards")]
-        public int RelocatingShards { get; set; }
+        public int RelocatingShards { get; internal set; }
         [JsonProperty(PropertyName = "initializing_shards")]
-        public int InitializingShards { get; set; }
+        public int InitializingShards { get; internal set; }
         [JsonProperty(PropertyName = "unassigned_shards")]
-        public int UnassignedShards { get; set; }
+        public int UnassignedShards { get; internal set; }
 
         [JsonProperty(PropertyName = "indices")]
         public Dictionary<string, IndexHealthStats> Indices { get; set; }

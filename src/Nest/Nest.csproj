@@ -65,6 +65,10 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\Parameters\NodeInfoParams.cs" />
+    <Compile Include="Domain\Responses\NodesResponse.cs" />
+    <Compile Include="Domain\Stats\NodeInfo.cs" />
+    <Compile Include="ElasticClient-Nodes.cs" />
     <Compile Include="ElasticClient-Health.cs" />
     <Compile Include="Domain\FieldSelection.cs" />
     <Compile Include="Domain\Parameters\HealthParams.cs" />
@@ -145,6 +149,7 @@
     <Compile Include="Enums\ComparatorType.cs" />
     <Compile Include="Enums\HealthStatus.cs" />
     <Compile Include="Enums\HealthLevel.cs" />
+    <Compile Include="Enums\NodesInfo.cs" />
     <Compile Include="Enums\SearchType.cs" />
     <Compile Include="Enums\Lang.cs" />
     <Compile Include="Enums\DateHistogramComparatorType.cs" />
