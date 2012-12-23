@@ -66,8 +66,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\Parameters\NodeInfoParams.cs" />
-    <Compile Include="Domain\Responses\NodesResponse.cs" />
+    <Compile Include="Domain\Responses\NodeStatsResponse.cs" />
+    <Compile Include="Domain\Responses\NodeInfoResponse.cs" />
+    <Compile Include="Domain\Stats\IndexStats.cs" />
     <Compile Include="Domain\Stats\NodeInfo.cs" />
+    <Compile Include="Domain\Stats\NodeStats.cs" />
     <Compile Include="ElasticClient-Nodes.cs" />
     <Compile Include="ElasticClient-Health.cs" />
     <Compile Include="Domain\FieldSelection.cs" />
@@ -147,6 +150,7 @@
     <Compile Include="DSL\Factory\Common\Point.cs" />
     <Compile Include="DSL\Factory\Common\EsRegex.cs" />
     <Compile Include="Enums\ComparatorType.cs" />
+    <Compile Include="Enums\NodeStatsInfo.cs" />
     <Compile Include="Enums\HealthStatus.cs" />
     <Compile Include="Enums\HealthLevel.cs" />
     <Compile Include="Enums\NodesInfo.cs" />

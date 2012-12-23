@@ -66,11 +66,11 @@ namespace Nest.Resolvers
             return suffix.IsNullOrEmpty() ? "_nodes" : "_nodes/{0}/".F(suffix);
         }
 
-	    public string CreateNodePath(IEnumerable<string> indices, string suffix = null)
+	    public string CreateNodePath(IEnumerable<string> nodes, string suffix = null)
         {
-            indices.ThrowIfEmpty("indices");
-            var index = string.Join(",", indices);
-            return suffix.IsNullOrEmpty() ? "_nodes/{0}".F(index) : "_nodes/{0}/{1}".F(index, suffix);
+            nodes.ThrowIfEmpty("indices");
+            var nodeStr = string.Join(",", nodes);
+            return suffix.IsNullOrEmpty() ? "_nodes/{0}".F(nodeStr) : "_nodes/{0}/{1}".F(nodeStr, suffix);
         }
 
 		//19

@@ -8,47 +8,104 @@ namespace Nest
 	public partial class ElasticClient
     {
         /// <summary>
-        /// Gets the health status of the cluster, at the specified level, for the specified indexes.
+        /// Gets the health status of the cluster.
         /// </summary>
-        /// <param name="level"></param>
-        /// <returns></returns>
-        public INodeInfoResponse NodeInfo(NodeInfoParams nodeInfoParams)
+        public INodeInfoResponse NodeInfo(NodesInfo nodesInfo)
         {
             var path = this.PathResolver.CreateNodePath();
-            return this._NodeInfo(path, nodeInfoParams);
+            return _NodeInfo(path, nodesInfo);
         }
 
-        private NodeInfoResponse _NodeInfo(string path, NodeInfoParams nodeInfoParams)
+        /// <summary>
+        /// Gets the health status of the cluster, for the specified nodes.
+        /// </summary>
+        public INodeInfoResponse NodeInfo(IEnumerable<string> nodes, NodesInfo nodesInfo)
         {
-            var infoOn = nodeInfoParams.InfoOn;
-            if (infoOn.HasFlag(NodesInfo.All))
+            var path = this.PathResolver.CreateNodePath(nodes);
+            return _NodeInfo(path, nodesInfo);
+        }
+
+        public NodeInfoResponse _NodeInfo(string path, NodesInfo nodesInfo)
+        {
+            if (nodesInfo.HasFlag(NodesInfo.All))
             {
                 path += "?all=true";
             }
             else
             {
                 var options = new List<string>();
-                if(infoOn.HasFlag(NodesInfo.Settings))
+                if (nodesInfo.HasFlag(NodesInfo.Settings))
                     options.Add("settings=true");
-                if (infoOn.HasFlag(NodesInfo.OS))
+                if (nodesInfo.HasFlag(NodesInfo.OS))
                     options.Add("os=true");
-                if (infoOn.HasFlag(NodesInfo.Process))
+                if (nodesInfo.HasFlag(NodesInfo.Process))
                     options.Add("process=true");
-                if (infoOn.HasFlag(NodesInfo.JVM))
+                if (nodesInfo.HasFlag(NodesInfo.JVM))
                     options.Add("jvm=true");
-                if (infoOn.HasFlag(NodesInfo.ThreadPool))
+                if (nodesInfo.HasFlag(NodesInfo.ThreadPool))
                     options.Add("thread_pool=true");
-                if (infoOn.HasFlag(NodesInfo.Network))
+                if (nodesInfo.HasFlag(NodesInfo.Network))
                     options.Add("network=true");
-                if (infoOn.HasFlag(NodesInfo.Transport))
+                if (nodesInfo.HasFlag(NodesInfo.Transport))
                     options.Add("transport=true");
-                if (infoOn.HasFlag(NodesInfo.HTTP))
+                if (nodesInfo.HasFlag(NodesInfo.HTTP))
                     options.Add("http=true");
                 path += "?" + string.Join("&", options);
             }
-
             var status = this.Connection.GetSync(path);
             var r = this.ToParsedResponse<NodeInfoResponse>(status);
+            return r;
+        }
+
+        /// <summary>
+        /// Gets the health status of each node in the cluster, for the specified indexes.
+        /// </summary>
+        public INodeStatsResponse NodeStats(NodeStatsInfo nodeStatsInfo)
+        {
+            var path = this.PathResolver.CreateNodePath("stats");
+            return this._NodeStats(path, nodeStatsInfo);
+        }
+
+        /// <summary>
+        /// Gets the health status of each node in the cluster, for the specified indexes.
+        /// </summary>
+        public INodeStatsResponse NodeStats(IEnumerable<string> nodes, NodeStatsInfo nodeStatsInfo)
+        {
+            var path = this.PathResolver.CreateNodePath("stats");
+            return this._NodeStats(path, nodeStatsInfo);
+        }
+        
+        public NodeStatsResponse _NodeStats(string path, NodeStatsInfo nodeStatsInfo)
+        {
+            if (nodeStatsInfo.HasFlag(NodeStatsInfo.All))
+            {
+                path += "?all=true";
+            }
+            else
+            {
+                var options = new List<string>();
+                if (nodeStatsInfo.HasFlag(NodeStatsInfo.FileSystem))
+                    options.Add("fs=true");
+                if (nodeStatsInfo.HasFlag(NodeStatsInfo.Indices))
+                    options.Add("indices=true");
+                if (nodeStatsInfo.HasFlag(NodeStatsInfo.OS))
+                    options.Add("os=true");
+                if (nodeStatsInfo.HasFlag(NodeStatsInfo.Process))
+                    options.Add("process=true");
+                if (nodeStatsInfo.HasFlag(NodeStatsInfo.JVM))
+                    options.Add("jvm=true");
+                if (nodeStatsInfo.HasFlag(NodeStatsInfo.ThreadPool))
+                    options.Add("thread_pool=true");
+                if (nodeStatsInfo.HasFlag(NodeStatsInfo.Network))
+                    options.Add("network=true");
+                if (nodeStatsInfo.HasFlag(NodeStatsInfo.Transport))
+                    options.Add("transport=true");
+                if (nodeStatsInfo.HasFlag(NodeStatsInfo.HTTP))
+                    options.Add("http=true");
+                path += "?" + string.Join("&", options);
+            }
+            var status = this.Connection.GetSync(path);
+            var r = this.ToParsedResponse<NodeStatsResponse>(status);
             return r;
         }
 	}
